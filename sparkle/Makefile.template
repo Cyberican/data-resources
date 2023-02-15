@@ -1,0 +1,21 @@
+CC=gcc
+USER={DOCKERHUB_USER}
+CTRNAME={CONTAINER_NAME}
+VER=latest
+OSVER=22.04
+PRGNAME=rund
+
+all: cleanup compile build push test
+compile:
+	find -type f -name $(PRGNAME) -delete
+	$(CC) $(PRGNAME).c -o $(PRGNAME)
+build:
+	@docker build -t $(USER)/$(CTRNAME):$(VER) .
+push:
+	@docker push $(USER)/$(CTRNAME):$(VER) 2> /dev/null
+test:
+	@docker run -d -it --name $(CTRNAME) $(USER)/$(CTRNAME):$(VER)
+cleanup:
+	@docker rm -f $(CTRNAME) 2> /dev/null
+	@docker rmi -f $(USER)/$(CTRNAME):$(VER) 2> /dev/null
+

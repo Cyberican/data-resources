@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Generated files
+tmp/**
+temp/**
+backups/**
+sparkle/rund
+sparkle/Makefile
+sparkle/docker-compose.yaml
